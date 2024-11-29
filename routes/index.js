@@ -135,15 +135,15 @@ router.get("/test", async function (req, res) {
     console.log(purchases);
     
     let purchaseArr = purchases.map(p => ({
-      checkName: p.Product.checkName,
-      displayName: p.Product.displayName,
+      checkName: p.Product?.checkName,
+      displayName: p.Product?.displayName,
       price: p.cost,
       amount: p.amount,
       weight: p.weight,
-      calories: p.Product.calories,
-      protein: p.Product.protein,
-      carbs: p.Product.carbs,
-      fats: p.Product.fats,
+      calories: p.Product?.calories,
+      protein: p.Product?.protein,
+      carbs: p.Product?.carbs,
+      fats: p.Product?.fats,
     }));
 
     let receipt = {
