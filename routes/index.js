@@ -123,14 +123,19 @@ router.get("/getreceiptdetails", async function (req, res) {
 
 router.get("/test", async function (req, res) {
   Purchase.findOne({
-    include: [{ model: Product, as: "product" }],
+    include: [
+      { model: Product},
+      { model: Receipt},
+    ],
   })
     .then((purchaseArr) => {
       console.log(purchaseArr);
       let purchases = purchaseArr.map((x) => x.toJSON());
       console.log(purchases);
     })
-    .catch((err) => {res.json(err)});
+    .catch((err) => {
+      res.json(err);
+    });
 });
 
 module.exports = router;
