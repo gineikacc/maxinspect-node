@@ -54,6 +54,7 @@ VALUES ('olive_oil_1l', 'Olive Oil (1L)', 2500, 1000, 884, 0, 0, 100);
 INSERT INTO Products (check_name, display_name, price, weight, calories, protein, carbs, fats) 
 VALUES ('potato_2kg', 'Potato (2kg)', 300, 2000, 77, 2, 17, 0.1);
 
+INSERT INTO `Receipts`(`id`,`owner_name`,`date_issued`,`cost_total`) VALUES(12345678,'airolen11','2024-11-13 20:06:01',1234);
 
 -- INSERT INTO `Tags`(`title`,`category`) VALUES ('Javascript','Language');
 -- post_date TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
