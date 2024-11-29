@@ -132,7 +132,7 @@ router.get("/test", async function (req, res) {
 
   let purchaseArr = purchases.map((p) => {
     let purchase = {
-      checkName: p.receipt_id,
+      checkName: p.product_id,
       price: p.cost,
       amount: p.amount,
       weight: p.weight,
