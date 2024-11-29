@@ -85,9 +85,9 @@ router.get("/getnewestreceiptid", async function (req, res) {
       id.id = receipt.id
     })
     .catch((err) => {
-      id = err;
+      res.send(0);
     });
-    res.json(id);
+    res.send(id);
 });
 
 
