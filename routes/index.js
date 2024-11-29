@@ -123,7 +123,6 @@ router.get("/getreceiptdetails", async function (req, res) {
 
 router.get("/test", async function (req, res) {
   Purchase.findOne({
-    where: { receipt_id: receipt.id },
     include: [{ model: Product, as: "product" }],
   })
     .then((purchaseArr) => {
