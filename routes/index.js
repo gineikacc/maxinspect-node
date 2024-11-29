@@ -81,7 +81,7 @@ router.get("/getnewestreceiptid", async function (req, res) {
   console.log("Getcheck ON");
    await Receipt.findOne({ where: {owner_name: req.query.owner},attributes: ['id'], order: [['date_issued', 'DESC']] })
     .then((receipt) => {
-      res.send(`$:{receipt.id}`)
+      res.send(`${receipt.id}`);
     })
     .catch((err) => {
       res.json(`${err.message}`) ;
