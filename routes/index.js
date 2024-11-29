@@ -102,13 +102,16 @@ router.get("/getreceiptdetails", async function (req, res) {
     attributes: ["id"],
   })
     .then((receipt) => {
+      console.log(`LOLOL`);
       //Find all purchases belonging to receipt
       Purchase.findAll({
         where: { receipt_id: receipt.id },
         include: [{ model: Product, as: "product" }],
       })
         .then((purchaseArr) => {
+      console.log(`LOLOL`);
           let purchases = purchaseArr.map((x) => x.toJSON());
+      console.log(`LOLOL`);
           console.log(purchases);
         })
         .catch((err) => {});
