@@ -31,6 +31,8 @@ router.post("/createreceipt", async function (req, res) {
     cost_total: totalPrice,
   };
 
+  console.log(receipt);
+  
   Receipt.create(receipt)
   .then(()=>{console.log("Receipt Created !")})
   .catch(err=>{console.log("PROBLEM!! " + err)});
