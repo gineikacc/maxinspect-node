@@ -146,8 +146,8 @@ router.get("/test", async function (req, res) {
         carbs: p.Product.carbs,
         fats: p.Product.fats,
       };
-      return purchase;
     }
+      return purchase;
   });
 
   let receipt = {
