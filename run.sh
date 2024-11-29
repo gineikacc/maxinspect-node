@@ -1,2 +1,2 @@
-sudo mariadb -u user -p weow < config/dbinit.sql
+sudo mariadb -u user -p < config/dbinit.sql
 sudo npm run start
