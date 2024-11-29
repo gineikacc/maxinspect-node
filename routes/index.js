@@ -51,6 +51,7 @@ router.post("/createreceipt", async function (req, res) {
   Purchase.create(purchase)
     .then(() => {
       console.log("Purchase Created !");
+      console.log(p.name);
     })
     .catch((err) => {
       console.log("PROBLEM!! " + err);
