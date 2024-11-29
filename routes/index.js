@@ -79,16 +79,13 @@ router.get("/getallreceiptids", async function (req, res) {
 
 router.get("/getnewestreceiptid", async function (req, res) {
   console.log("Getcheck ON");
-  let id;
-  let err;
    await Receipt.findOne({ where: {owner_name: req.query.owner},attributes: ['id'], order: [['date_issued', 'DESC']] })
     .then((receipt) => {
-      id.id = receipt.id
+      res.send(receipt.id)
     })
     .catch((err) => {
-      err = err;
+      res.json(`${err.message}`) ;
     });
-    err ? res.send(`${err.message}`) : res.send(id);
 });
 
 
