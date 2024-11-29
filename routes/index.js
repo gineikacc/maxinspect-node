@@ -131,7 +131,7 @@ router.get("/test", async function (req, res) {
       let purchases = purchaseArr.map((x) => x.toJSON());
       console.log(purchases);
     })
-    .catch((err) => {});
+    .catch((err) => {res.error(err)});
 });
 
 module.exports = router;
