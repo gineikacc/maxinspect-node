@@ -54,6 +54,8 @@ router.post("/createreceipt", async function (req, res) {
     })
     .catch((err) => {
       console.log("PROBLEM!! " + err);
+      console.log(p);
+      console.log("PROBLEM OVER!! " );
     });
 
   });
