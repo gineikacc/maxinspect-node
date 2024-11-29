@@ -137,14 +137,15 @@ router.get("/test", async function (req, res) {
       weight: p.weight,
     };
     if (p.Product) {
-      Object.assign(purchase, {
+      purchase = {
+        ...purchase,
         checkName: p.Product.checkName,
         displayName: p.Product.displayName,
         calories: p.Product.calories,
         protein: p.Product.protein,
         carbs: p.Product.carbs,
         fats: p.Product.fats,
-      });
+      };
       return purchase;
     }
   });
