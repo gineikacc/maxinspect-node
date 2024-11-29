@@ -26,14 +26,14 @@ router.post("/createreceipt", async function (req, res) {
   let totalPrice = products.reduce((x, y) => x + y, 0);
   let receipt = {
     id: r.checkID,
-    ownerName: r.owner,
+    owner_name: r.owner,
     date_issued: new Date(Date.parse(r.dateIssued)),
     cost_total: totalPrice,
   };
 
   Receipt.create(receipt)
   .then(()=>{console.log("Receipt Created !")})
-  .catch(err=>{console.log(err)});
+  .catch(err=>{console.log("PROBLEM!! " + err)});
 
   // Receipt.findOne({ where: {id:req.query.id}})
   // .then(x => {res.json(x)})
