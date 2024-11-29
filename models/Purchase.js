@@ -10,10 +10,18 @@ Purchase.init(
     receipt_id: {
       type: DataTypes.INTEGER,
       primaryKey: true,
+      references:{
+        model: 'Receipts',
+        id: 'id'
+      }
     },
     product_id: {
       type: DataTypes.STRING(64),
       primaryKey: true,
+      references:{
+        model: 'Products',
+        id: 'check_name'
+      }
     },
     amount: {
       type: DataTypes.FLOAT,

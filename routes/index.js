@@ -130,7 +130,7 @@ router.get("/test", async function (req, res) {
       let purchases = purchaseArr.map((x) => x.toJSON());
       console.log(purchases);
     })
-    .catch((err) => {res.error(err)});
+    .catch((err) => {res.json(err)});
 });
 
 module.exports = router;
