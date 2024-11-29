@@ -70,7 +70,7 @@ router.get("/getallreceiptids", async function (req, res) {
       res.json(x);
     })
     .catch((err) => {
-      res.send(err);
+      res.json(err);
     });
     res.json(ids);
 
