@@ -132,6 +132,8 @@ router.get("/test", async function (req, res) {
       { model: Receipt},
     ],
   });
+    console.log(purchases);
+    
     let purchaseArr = purchases.map(p => ({
       checkName: p.Product.checkName,
       displayName: p.Product.displayName,
