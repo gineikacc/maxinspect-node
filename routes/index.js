@@ -147,8 +147,8 @@ router.get("/test", async function (req, res) {
     }));
 
     let receipt = {
-      owner: req.query.owner ?? "b0ssman",
-      checkID: req.query.id ?? "0",
+      owner: req.query.owner,
+      checkID: req.query.id,
       products: purchaseArr,
       dateIssued: purchases[0].Receipt.dateIssued
     }
