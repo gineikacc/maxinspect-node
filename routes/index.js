@@ -27,7 +27,7 @@ router.post("/createreceipt", async function (req, res) {
   let receipt = {
     id: r.checkID,
     owner_name: r.owner,
-    date_issued: new Date(Date.parse(r.dateIssued)),
+    date_issued: r.date_issued,
     cost_total: totalPrice,
   };
 
