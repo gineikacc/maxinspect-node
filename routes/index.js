@@ -1,6 +1,7 @@
 var express = require("express");
 var router = express.Router();
 var Receipt = require("../models/Receipt");
+const Purchase = require("../models/Purchase");
 
 /* GET home page. */
 router.get("/", function (req, res) {
@@ -31,11 +32,31 @@ router.post("/createreceipt", async function (req, res) {
     cost_total: totalPrice,
   };
 
-  console.log(receipt);
-  
   Receipt.create(receipt)
-  .then(()=>{console.log("Receipt Created !")})
-  .catch(err=>{console.log("PROBLEM!! " + err)});
+    .then(() => {
+      console.log("Receipt Created !");
+    })
+    .catch((err) => {
+      console.log("PROBLEM!! " + err);
+      res.json({code:200});
+    });
+  console.log(`check ${checkID} purchase count : ${products.length}`);
+  products.forEach((p) => {
+    let purchase = {
+      receipt_id: receipt.id,
+      product_id: p.name,
+      amount: p.amount,
+      cost: p.price
+    };
+  Purchase.create(purchase)
+    .then(() => {
+      console.log("Purchase Created !");
+    })
+    .catch((err) => {
+      console.log("PROBLEM!! " + err);
+    });
+
+  });
 
   // Receipt.findOne({ where: {id:req.query.id}})
   // .then(x => {res.json(x)})
