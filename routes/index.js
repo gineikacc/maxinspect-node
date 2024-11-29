@@ -67,8 +67,8 @@ router.get("/getallreceiptids", async function (req, res) {
   console.log("Getcheck ON");
   let ids = [];
    await Receipt.findAll({ where: {owner_name: req.query.owner},attributes: ['id'] })
-    .then((x) => {
-      ids = x;
+    .then((receipt) => {
+      ids = receipt.map(x=>x.id);
     })
     .catch((err) => {
       ids = err;
