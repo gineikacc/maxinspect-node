@@ -23,7 +23,7 @@ router.post("/createreceipt", async function (req, res) {
   //Need input check
   let r = req.body;
   let products = r.products;
-  let totalPrice = products.reduce((x, y) => x + y, 0);
+  let totalPrice = products.reduce((acc, x) => acc + x.price, 0);
   let receipt = {
     id: r.checkID,
     owner_name: r.owner,
