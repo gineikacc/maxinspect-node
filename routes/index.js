@@ -133,12 +133,12 @@ router.get("/test", async function (req, res) {
       { model: Receipt},
     ],
   })
-    .then((purchaseArr) => {
-      console.log(purchaseArr);
-      let purchases = purchaseArr.map((x) => x.toJSON());
-      console.log(purchases);
+    .then((purchase) => {
+      console.log("IMPORTANT");
+      console.log(purchase);
     })
     .catch((err) => {
+      console.log("Big problem");
       res.json(err);
     });
 });

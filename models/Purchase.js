@@ -40,10 +40,10 @@ Purchase.init(
 );
 
 Purchase.belongsTo(Receipt, { foreignKey: "receipt_id" });
-Receipt.hasMany(Purchase, {foreignKey: 'receipt_id'});
+Receipt.hasMany(Purchase);
 
 Purchase.belongsTo(Product, { foreignKey: "product_id" });
-Product.hasMany(Purchase, { foreignKey: "product_id" });
+Product.hasMany(Purchase);
 
 
 module.exports = Purchase;
