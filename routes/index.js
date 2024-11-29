@@ -122,7 +122,12 @@ router.get("/getreceiptdetails", async function (req, res) {
 });
 
 router.get("/test", async function (req, res) {
+
   Purchase.findOne({
+    where:{
+      receipt_id: 983,
+      product_id: 'Bananai'
+    },
     include: [
       { model: Product},
       { model: Receipt},
