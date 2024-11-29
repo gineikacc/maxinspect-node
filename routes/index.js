@@ -122,38 +122,40 @@ router.get("/getreceiptdetails", async function (req, res) {
 });
 
 router.get("/test", async function (req, res) {
-
   let purchases = await Purchase.findAll({
-    where:{
+    where: {
       receipt_id: 983,
     },
-    include: [
-      { model: Product},
-      { model: Receipt},
-    ],
+    include: [{ model: Product }, { model: Receipt }],
   });
-    console.log(purchases);
-    
-    let purchaseArr = purchases.map(p => ({
-      checkName: p.Product?.checkName,
-      displayName: p.Product?.displayName,
+  console.log(purchases);
+
+  let purchaseArr = purchases.map((p) => {
+    let purchase = {
       price: p.cost,
       amount: p.amount,
       weight: p.weight,
-      calories: p.Product?.calories,
-      protein: p.Product?.protein,
-      carbs: p.Product?.carbs,
-      fats: p.Product?.fats,
-    }));
-
-    let receipt = {
-      owner: req.query.owner,
-      checkID: req.query.id,
-      products: purchaseArr,
-      dateIssued: purchases[0].Receipt.dateIssued
+    };
+    if (p.Product) {
+      Object.assign(purchase, {
+        checkName: p.Product.checkName,
+        displayName: p.Product.displayName,
+        calories: p.Product.calories,
+        protein: p.Product.protein,
+        carbs: p.Product.carbs,
+        fats: p.Product.fats,
+      });
+      return purchase;
     }
-    res.json(receipt);
+  });
 
+  let receipt = {
+    owner: req.query.owner,
+    checkID: req.query.id,
+    products: purchaseArr,
+    dateIssued: purchases[0].Receipt.dateIssued,
+  };
+  res.json(receipt);
 });
 
 module.exports = router;
