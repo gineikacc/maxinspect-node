@@ -123,24 +123,35 @@ router.get("/getreceiptdetails", async function (req, res) {
 
 router.get("/test", async function (req, res) {
 
-  Purchase.findOne({
+  let purchases = await Purchase.findAll({
     where:{
       receipt_id: 983,
-      product_id: 'Bananai'
     },
     include: [
       { model: Product},
       { model: Receipt},
     ],
-  })
-    .then((purchase) => {
-      console.log("IMPORTANT");
-      console.log(purchase);
-    })
-    .catch((err) => {
-      console.log("Big problem");
-      res.json(err);
-    });
+  });
+    let purchaseArr = purchases.map(p => ({
+      checkName: p.Product.checkName,
+      displayName: p.Product.displayName,
+      price: p.cost,
+      amount: p.amount,
+      weight: p.weight,
+      calories: p.Product.calories,
+      protein: p.Product.protein,
+      carbs: p.Product.carbs,
+      fats: p.Product.fats,
+    }));
+
+    let receipt = {
+      owner: req.query.owner ?? "b0ssman",
+      checkID: req.query.id ?? "0",
+      products: purchaseArr,
+      dateIssued: purchases[0].Receipt.dateIssued
+    }
+    res.json(receipt);
+
 });
 
 module.exports = router;
