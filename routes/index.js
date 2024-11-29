@@ -2,6 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Receipt = require("../models/Receipt");
 const Purchase = require("../models/Purchase");
+const Product = require("../models/Product");
 
 /* GET home page. */
 router.get("/", function (req, res) {
@@ -38,7 +39,7 @@ router.post("/createreceipt", async function (req, res) {
     })
     .catch((err) => {
       console.log("PROBLEM!! " + err);
-      res.json({code:200});
+      res.json({ code: 200 });
     });
   console.log(`check ${receipt.id} purchase count : ${products.length}`);
   products.forEach((p) => {
@@ -46,47 +47,75 @@ router.post("/createreceipt", async function (req, res) {
       receipt_id: receipt.id,
       product_id: p.name,
       amount: p.amount,
-      cost: p.price
+      cost: p.price,
     };
-  Purchase.create(purchase)
-    .then(() => {
-      console.log("Purchase Created !");
-      console.log(p.name);
-    })
-    .catch((err) => {
-      console.log("PROBLEM!! " + err);
-      console.log(p);
-      console.log("PROBLEM OVER!! " );
-    });
-
+    Purchase.create(purchase)
+      .then(() => {
+        console.log("Purchase Created !");
+        console.log(p.name);
+      })
+      .catch((err) => {
+        console.log("PROBLEM!! " + err);
+        console.log(p);
+        console.log("PROBLEM OVER!! ");
+      });
   });
-res.status(500);
+  res.status(500);
 });
 
 router.get("/getallreceiptids", async function (req, res) {
   console.log("Getcheck ON");
   let ids = [];
-   await Receipt.findAll({ where: {owner_name: req.query.owner},attributes: ['id'] })
+  await Receipt.findAll({
+    where: { owner_name: req.query.owner },
+    attributes: ["id"],
+  })
     .then((receipt) => {
-      ids = receipt.map(x=>x.id);
+      ids = receipt.map((x) => x.id);
     })
     .catch((err) => {
       ids = err;
     });
-    res.json(ids);
+  res.json(ids);
 });
-
 
 router.get("/getnewestreceiptid", async function (req, res) {
   console.log("Getcheck ON");
-   await Receipt.findOne({ where: {owner_name: req.query.owner},attributes: ['id'], order: [['date_issued', 'DESC']] })
+  await Receipt.findOne({
+    where: { owner_name: req.query.owner },
+    attributes: ["id"],
+    order: [["date_issued", "DESC"]],
+  })
     .then((receipt) => {
       res.send(`${receipt.id}`);
     })
     .catch((err) => {
-      res.json(`${err.message}`) ;
+      res.send(`0`);
     });
 });
 
+router.get("/getreceiptdetails", async function (req, res) {
+  console.log("ReceiptDetails ON");
+  // owner checkID products dateIssued
+  await Receipt.findOne({
+    where: { owner_name: req.query.owner },
+    attributes: ["id"],
+  })
+    .then((receipt) => {
+      //Find all purchases belonging to receipt
+      Purchase.findAll({
+        where: { receipt_id: receipt.id },
+        include: [{ model: Product, as: "product" }],
+      })
+        .then((purchaseArr) => {
+          let purchases = purchaseArr.map((x) => x.toJSON());
+          console.log(purchases);
+        })
+        .catch((err) => {});
+    })
+    .catch((err) => {
+      res.error(err);
+    });
+});
 
 module.exports = router;
