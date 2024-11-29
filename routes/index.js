@@ -104,14 +104,14 @@ router.get("/getreceiptdetails", async function (req, res) {
     .then((receipt) => {
       console.log(`LOLOL`);
       //Find all purchases belonging to receipt
-      Purchase.findAll({
+      Purchase.findOne({
         where: { receipt_id: receipt.id },
         include: [{ model: Product, as: "product" }],
       })
         .then((purchaseArr) => {
-      console.log(`LOLOL`);
+          console.log(`LOLOL`);
           let purchases = purchaseArr.map((x) => x.toJSON());
-      console.log(`LOLOL`);
+          console.log(`LOLOL`);
           console.log(purchases);
         })
         .catch((err) => {});
@@ -119,6 +119,19 @@ router.get("/getreceiptdetails", async function (req, res) {
     .catch((err) => {
       res.error(err);
     });
+});
+
+router.get("/test", async function (req, res) {
+  Purchase.findOne({
+    where: { receipt_id: receipt.id },
+    include: [{ model: Product, as: "product" }],
+  })
+    .then((purchaseArr) => {
+      console.log(purchaseArr);
+      let purchases = purchaseArr.map((x) => x.toJSON());
+      console.log(purchases);
+    })
+    .catch((err) => {});
 });
 
 module.exports = router;
