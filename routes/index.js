@@ -3,15 +3,14 @@ var router = express.Router();
 var Receipt = require("../models/Receipt");
 const Purchase = require("../models/Purchase");
 const Product = require("../models/Product");
-const multer = require('multer');
-const path = require('path');
-const csv = require('csv-parser');
-const stream = require('stream');
+const multer = require("multer");
+const path = require("path");
+const csv = require("csv-parser");
+const stream = require("stream");
 
 // Set up multer to store files in memory
 const storage = multer.memoryStorage();
 const upload = multer({ storage: storage });
-
 
 /* GET home page. */
 router.get("/", function (req, res) {
@@ -156,7 +155,7 @@ router.get("/test", async function (req, res) {
         fats: p.Product.fats,
       };
     }
-      return purchase;
+    return purchase;
   });
 
   let receipt = {
@@ -168,54 +167,55 @@ router.get("/test", async function (req, res) {
   res.json(receipt);
 });
 
-router.post("/uploadcsv", upload.single('file'), async function (req, res) {
-
+router.post("/uploadcsv", upload.single("file"), async function (req, res) {
   if (!req.file) {
-    return res.status(400).send('No file uploaded');
+    return res.status(400).send("No file uploaded");
   }
   const csvData = [];
   const errors = [];
-  
+
   // Create a readable stream from the buffer in memory
   const bufferStream = new stream.PassThrough();
-  bufferStream.end(req.file.buffer);  // 'buffer' contains the file's content in memory
+  bufferStream.end(req.file.buffer); // 'buffer' contains the file's content in memory
 
   // Parse CSV data
   bufferStream
     .pipe(csv())
-    .on('data', (row) => {
+    .on("data", (row) => {
       // Process each row of the CSV
-      try {
-        let product = {
-          check_name: row.check_name,
-          product_name: row.product_name,
-          price: +row.price,
-          weight: +row.weight,
-          calories: +row.calories,
-          protein: +row.protein,
-          carbs: +row.carbs,
-          fats: +row.fats,
-        }
-        Product.create(row);
-      } catch (err) {
-        errors.push(err.message);
-      }
+      let product = {
+        check_name: row.check_name,
+        product_name: row.product_name,
+        price: +row.price,
+        weight: +row.weight,
+        calories: +row.calories,
+        protein: +row.protein,
+        carbs: +row.carbs,
+        fats: +row.fats,
+      };
+      Product.create(row)
+        .then(() => {
+          console.log(`Created ${row.display_name}`);
+        })
+        .catch((err) => {
+          errors.push(err);
+        });
       csvData.push(row); // Add the row to the csvData array
     })
-    .on('end', () => {
+    .on("end", () => {
       // After parsing is complete, send the parsed data as a response
       console.log("csvData");
       console.log(csvData);
       console.log("Errors");
       console.log(errors);
       res.status(200).json({
-        message: 'CSV processed successfully',
-        data: csvData  // Send the parsed CSV data
+        message: "CSV processed successfully",
+        data: csvData, // Send the parsed CSV data
       });
     })
-    .on('error', (err) => {
-      res.status(500).send('Error processing the file');
-    }); 
+    .on("error", (err) => {
+      res.status(500).send("Error processing the file");
+    });
 });
 
 module.exports = router;
