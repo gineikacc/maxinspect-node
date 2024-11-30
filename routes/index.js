@@ -181,7 +181,7 @@ router.post("/uploadcsv", upload.single("file"), async function (req, res) {
   // Parse CSV data
   bufferStream
     .pipe(csv())
-    .on("data", (row) => {
+    .on("data", async (row) => {
       // Process each row of the CSV
       let product = {
         check_name: row.check_name,
@@ -193,13 +193,13 @@ router.post("/uploadcsv", upload.single("file"), async function (req, res) {
         carbs: +row.carbs,
         fats: +row.fats,
       };
-      Product.create(row)
-        .then(() => {
-          console.log(`Created ${row.display_name}`);
-        })
-        .catch((err) => {
-          errors.push(err);
-        });
+      try {
+        let p = await Product.create(row);
+        await p.save();
+        console.log(`Created ${row.display_name}`);
+      } catch (err) {
+        errors.push(err);
+      }
       csvData.push(row); // Add the row to the csvData array
     })
     .on("end", () => {
