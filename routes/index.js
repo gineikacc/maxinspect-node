@@ -187,7 +187,7 @@ router.post("/uploadcsv", upload.single("file"), async function (req, res) {
       // Process each row of the CSV
       let product = {
         check_name: row.check_name,
-        display_name: row.display_name,
+        display_name: row.product_name,
         price: +row.price,
         weight: +row.weight,
         calories: +row.calories,
