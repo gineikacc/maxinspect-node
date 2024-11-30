@@ -123,11 +123,11 @@ router.get("/getreceiptdetails", async function (req, res) {
           console.log(purchases);
         })
         .catch((err) => {
-          res.error(err)
+          res.send(err.message)
         });
     })
     .catch((err) => {
-      res.error(err);
+      res.send(err.message);
     });
 });
 
