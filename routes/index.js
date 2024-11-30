@@ -201,6 +201,7 @@ router.post("/uploadcsv", upload.single("file"), async function (req, res) {
         console.log(`Created ${row.display_name}`);
       } catch (err) {
         console.log(`Err!`);
+        console.log(err.message);
         errors.push(err);
       }
       csvData.push(row); // Add the row to the csvData array
