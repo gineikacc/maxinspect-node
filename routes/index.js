@@ -3,6 +3,13 @@ var router = express.Router();
 var Receipt = require("../models/Receipt");
 const Purchase = require("../models/Purchase");
 const Product = require("../models/Product");
+const multer = require('multer');
+const path = require('path');
+
+// Set up multer to store files in memory
+const storage = multer.memoryStorage();
+const upload = multer({ storage: storage });
+
 
 /* GET home page. */
 router.get("/", function (req, res) {
@@ -157,6 +164,38 @@ router.get("/test", async function (req, res) {
     dateIssued: purchases[0].Receipt.dateIssued,
   };
   res.json(receipt);
+});
+
+router.post("/uploadcsv", upload.single('file'), async function (req, res) {
+
+  if (!req.file) {
+    return res.status(400).send('No file uploaded');
+  }
+  const csvData = [];
+  
+  // Create a readable stream from the buffer in memory
+  const bufferStream = new stream.PassThrough();
+  bufferStream.end(req.file.buffer);  // 'buffer' contains the file's content in memory
+
+  // Parse CSV data
+  bufferStream
+    .pipe(csv())
+    .on('data', (row) => {
+      // Process each row of the CSV
+      csvData.push(row);  // Add the row to the csvData array
+    })
+    .on('end', () => {
+      // After parsing is complete, send the parsed data as a response
+      console.log("csvData");
+      console.log(csvData);
+      res.status(200).json({
+        message: 'CSV processed successfully',
+        data: csvData  // Send the parsed CSV data
+      });
+    })
+    .on('error', (err) => {
+      res.status(500).send('Error processing the file');
+    }); 
 });
 
 module.exports = router;
