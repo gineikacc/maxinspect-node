@@ -104,13 +104,14 @@ router.get("/getnewestreceiptid", async function (req, res) {
 
 
 router.get("/getreceiptdetails", async function (req, res) {
+  console.log("AAA");
+  
   let purchases = await Purchase.findAll({
     where: {
       receipt_id: req.query.id,
     },
     include: [{ model: Product }, { model: Receipt }],
   });
-  console.log(purchases);
 
   let purchaseArr = purchases.map((p) => {
     let purchase = {
@@ -132,6 +133,7 @@ router.get("/getreceiptdetails", async function (req, res) {
     return purchase;
   });
 
+  console.log(purchases);
   res.json(purchaseArr);
 });
 
