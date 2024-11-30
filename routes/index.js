@@ -132,12 +132,6 @@ router.get("/getreceiptdetails", async function (req, res) {
     return purchase;
   });
 
-  let receipt = {
-    owner: req.query.owner,
-    checkID: req.query.id,
-    products: purchaseArr,
-    dateIssued: purchases[0].Receipt.dateIssued,
-  };
   res.json(purchaseArr);
 });
 
