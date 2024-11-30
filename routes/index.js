@@ -196,7 +196,7 @@ router.post("/uploadcsv", upload.single("file"), async function (req, res) {
         fats: +row.fats,
       };
       try {
-        if(p.price == '*') return;
+        if(row.price == '*') return;
         let p = await Product.create(product);
         await p.save();
         console.log(`Created ${row.product_name}`);
