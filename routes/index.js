@@ -102,39 +102,11 @@ router.get("/getnewestreceiptid", async function (req, res) {
     });
 });
 
-router.get("/getreceiptdetails", async function (req, res) {
-  console.log("ReceiptDetails ON");
-  // owner checkID products dateIssued
-  await Receipt.findOne({
-    where: { owner_name: req.query.owner },
-    attributes: ["id"],
-  })
-    .then((receipt) => {
-      console.log(`LOLOL`);
-      //Find all purchases belonging to receipt
-      Purchase.findOne({
-        where: { receipt_id: receipt.id },
-        include: [{ model: Product, as: "product" }],
-      })
-        .then((purchaseArr) => {
-          console.log(`LOLOL`);
-          let purchases = purchaseArr.map((x) => x.toJSON());
-          console.log(`LOLOL`);
-          console.log(purchases);
-        })
-        .catch((err) => {
-          res.send(err.message)
-        });
-    })
-    .catch((err) => {
-      res.send(err.message);
-    });
-});
 
-router.get("/test", async function (req, res) {
+router.get("/getreceiptdetails", async function (req, res) {
   let purchases = await Purchase.findAll({
     where: {
-      receipt_id: 983,
+      receipt_id: req.query.id,
     },
     include: [{ model: Product }, { model: Receipt }],
   });
@@ -166,7 +138,7 @@ router.get("/test", async function (req, res) {
     products: purchaseArr,
     dateIssued: purchases[0].Receipt.dateIssued,
   };
-  res.json(receipt);
+  res.json(purchaseArr);
 });
 
 router.post("/uploadcsv", upload.single("file"), async function (req, res) {
