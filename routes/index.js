@@ -198,7 +198,7 @@ router.post("/uploadcsv", upload.single("file"), async function (req, res) {
       try {
         let p = await Product.create(product);
         await p.save();
-        console.log(`Created ${row.display_name}`);
+        console.log(`Created ${row.product_name}`);
       } catch (err) {
         console.log(`Err!`);
         console.log(err.message);
