@@ -168,6 +168,8 @@ router.get("/test", async function (req, res) {
 });
 
 router.post("/uploadcsv", upload.single("file"), async function (req, res) {
+  console.log("TEXT UPP");
+  
   if (!req.file) {
     return res.status(400).send("No file uploaded");
   }
@@ -198,6 +200,7 @@ router.post("/uploadcsv", upload.single("file"), async function (req, res) {
         await p.save();
         console.log(`Created ${row.display_name}`);
       } catch (err) {
+        console.log(`Err!`);
         errors.push(err);
       }
       csvData.push(row); // Add the row to the csvData array
