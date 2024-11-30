@@ -174,6 +174,7 @@ router.post("/uploadcsv", upload.single('file'), async function (req, res) {
     return res.status(400).send('No file uploaded');
   }
   const csvData = [];
+  const errors = [];
   
   // Create a readable stream from the buffer in memory
   const bufferStream = new stream.PassThrough();
@@ -184,12 +185,19 @@ router.post("/uploadcsv", upload.single('file'), async function (req, res) {
     .pipe(csv())
     .on('data', (row) => {
       // Process each row of the CSV
-      csvData.push(row);  // Add the row to the csvData array
+      try {
+        Product.create(row);
+      } catch (err) {
+        errors.push(err.message);
+      }
+      csvData.push(row); // Add the row to the csvData array
     })
     .on('end', () => {
       // After parsing is complete, send the parsed data as a response
       console.log("csvData");
       console.log(csvData);
+      console.log("Errors");
+      console.log(errors);
       res.status(200).json({
         message: 'CSV processed successfully',
         data: csvData  // Send the parsed CSV data
