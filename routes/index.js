@@ -108,7 +108,7 @@ router.get("/getreceiptdetails", async function (req, res) {
   
   let purchases = await Purchase.findAll({
     where: {
-      receipt_id: req.query.id,
+      receipt_id: +req.query.id,
     },
     include: [{ model: Product }, { model: Receipt }],
   });
