@@ -108,7 +108,7 @@ router.get("/getreceiptdetails", async function (req, res) {
   
   let purchases = await Purchase.findAll({
     where: {
-      receipt_id: +req.query.id,
+      receipt_id: req.query.id,
     },
     include: [{ model: Product }, { model: Receipt }],
   });
@@ -118,7 +118,7 @@ router.get("/getreceiptdetails", async function (req, res) {
       checkName: p.product_id,
       price: p.cost,
       amount: p.amount,
-      weight: p.weight,
+      weight: Math.trunc(p.weight*1000),
     };
     if (p.Product) {
       purchase = {
