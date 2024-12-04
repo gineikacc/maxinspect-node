@@ -71,6 +71,25 @@ router.post("/createreceipt", async function (req, res) {
   res.status(200).send("");
 });
 
+// checkID -> product[]
+router.get("/getprodutsofcheck", async function (req, res) {
+  console.log("Getcheck ON");
+  let products = [];
+  await Product.findAll({
+    where: { receipt_id: req.query.id },
+    include: [{ model: Product }],
+  })
+    .then((arr) => {
+      products = arr;
+    })
+    .catch((err) => {
+      res.status(500);
+      products = err;
+    });
+  res.json(products);
+});
+
+// OwnerID -> checkID[]
 router.get("/getallreceiptids", async function (req, res) {
   console.log("Getcheck ON");
   let ids = [];
