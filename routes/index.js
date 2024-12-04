@@ -123,12 +123,21 @@ router.get("/getreceiptdetails", async function (req, res) {
     if (p.Product) {
       purchase = {
         ...purchase,
-        displayName: p.Product?.display_name ?? "",
-        calories: p.Product?.calories ?? -1,
-        protein: p.Product?.protein ?? -1,
-        carbs: p.Product?.carbs ?? -1,
-        fats: p.Product?.fats ?? -1
+        displayName: p.Product.display_name,
+        calories: p.Product.calories,
+        protein: p.Product.protein,
+        carbs: p.Product.carbs,
+        fats: p.Product.fats,
       };
+    } else {
+      purchase = {
+        ...purchase,
+        displayName: p.Product.display_name ?? "",
+        calories: p.Product.calories ?? -1,
+        protein: p.Product.protein ?? -1,
+        carbs: p.Product.carbs ?? -1,
+        fats: p.Product.fats ?? -1
+      }
     }
     return purchase;
   });
