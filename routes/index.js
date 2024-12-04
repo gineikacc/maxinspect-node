@@ -77,7 +77,7 @@ router.get("/getproductsofcheck", async function (req, res) {
   let products = [];
   await Product.findAll({
     where: { receipt_id: req.query.id },
-    include: [{ model: Product }],
+    include: [{ model: Purchase }],
   })
     .then((arr) => {
       products = arr;
