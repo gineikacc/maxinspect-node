@@ -120,7 +120,7 @@ router.get("/getreceiptdetails", async function (req, res) {
       amount: p.amount,
       weight: p.weight ? Math.trunc(p.weight*1000) : -1,
     };
-    if (p.Product) {
+    if (p.Product != null) {
       purchase = {
         ...purchase,
         displayName: p.Product.display_name,
