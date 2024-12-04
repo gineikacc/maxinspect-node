@@ -120,7 +120,7 @@ router.get("/getreceiptdetails", async function (req, res) {
       amount: p.amount,
       weight: p.weight ? Math.trunc(p.weight*1000) : -1,
     };
-    if (p.Product != null) {
+    if (p.Product) {
       purchase = {
         ...purchase,
         displayName: p.Product.display_name,
@@ -132,11 +132,11 @@ router.get("/getreceiptdetails", async function (req, res) {
     } else {
       purchase = {
         ...purchase,
-        displayName: (p.Product.display_name != null ? p.Product.display_name : ""),
-        calories: (p.Product.calories != null ? p.Product.calories : -1),
-        protein: (p.Product.protein != null ? p.Product.protein : -1),
-        carbs: (p.Product.carbs != null ? p.Product.carbs : -1),
-        fats: (p.Product.fats != null ? p.Product.fats : -1)
+        displayName: "",
+        calories: -1,
+        protein: -1,
+        carbs: -1,
+        fats: -1,
       }
     }
     return purchase;
