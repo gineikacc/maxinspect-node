@@ -76,15 +76,19 @@ router.get("/getproductsofcheck", async function (req, res) {
   console.log("Getcheck ON");
   let products = [];
   await Product.findAll({
-    where: { receipt_id: req.query.id },
-    include: [{ model: Purchase }],
+    include: [
+      {
+        model: Purchase,
+        where: { receipt_id: req.query.id },
+      },
+    ],
   })
     .then((arr) => {
       products = arr;
     })
     .catch((err) => {
-      console.log("lulw just ignore the error luwl ")
-      console.log(err)
+      console.log("lulw just ignore the error luwl ");
+      console.log(err);
       // res.status(500);
       // products = err;
     });
@@ -123,10 +127,9 @@ router.get("/getnewestreceiptid", async function (req, res) {
     });
 });
 
-
 router.get("/getreceiptdetails", async function (req, res) {
   console.log("AAA");
-  
+
   let purchases = await Purchase.findAll({
     where: {
       receipt_id: req.query.id,
@@ -159,7 +162,7 @@ router.get("/getreceiptdetails", async function (req, res) {
         protein: -1,
         carbs: -1,
         fats: -1,
-      }
+      };
     }
     return purchase;
   });
@@ -170,7 +173,7 @@ router.get("/getreceiptdetails", async function (req, res) {
 
 router.post("/uploadcsv", upload.single("file"), async function (req, res) {
   console.log("TEXT UPP");
-  
+
   if (!req.file) {
     return res.status(400).send("No file uploaded");
   }
@@ -197,7 +200,7 @@ router.post("/uploadcsv", upload.single("file"), async function (req, res) {
         fats: +row.fats,
       };
       try {
-        if(row.price == '*') return;
+        if (row.price == "*") return;
         let p = await Product.create(product);
         await p.save();
         console.log(`Created ${row.product_name}`);
