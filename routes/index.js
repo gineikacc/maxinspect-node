@@ -129,6 +129,7 @@ router.get("/getreceiptdetails", async function (req, res) {
         carbs: p.Product?.carbs ?? -1,
         fats: p.Product?.fats ?? -1
       };
+    }
     return purchase;
   });
 
