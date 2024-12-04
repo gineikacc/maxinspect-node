@@ -132,11 +132,11 @@ router.get("/getreceiptdetails", async function (req, res) {
     } else {
       purchase = {
         ...purchase,
-        displayName: (p.Product.display_name !== null ? p.Product.display_name : ""),
-        calories: (p.Product.calories !== null ? p.Product.calories : -1),
-        protein: (p.Product.protein !== null ? p.Product.protein : -1),
-        carbs: (p.Product.carbs !== null ? p.Product.carbs : -1),
-        fats: (p.Product.fats !== null ? p.Product.fats : -1)
+        displayName: (p.Product.display_name != null ? p.Product.display_name : ""),
+        calories: (p.Product.calories != null ? p.Product.calories : -1),
+        protein: (p.Product.protein != null ? p.Product.protein : -1),
+        carbs: (p.Product.carbs != null ? p.Product.carbs : -1),
+        fats: (p.Product.fats != null ? p.Product.fats : -1)
       }
     }
     return purchase;
