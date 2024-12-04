@@ -72,7 +72,7 @@ router.post("/createreceipt", async function (req, res) {
 });
 
 // checkID -> product[]
-router.get("/getprodutsofcheck", async function (req, res) {
+router.get("/getproductsofcheck", async function (req, res) {
   console.log("Getcheck ON");
   let products = [];
   await Product.findAll({
