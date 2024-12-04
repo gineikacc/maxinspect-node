@@ -83,8 +83,9 @@ router.get("/getproductsofcheck", async function (req, res) {
       products = arr;
     })
     .catch((err) => {
-      res.status(500);
-      products = err;
+      console.log("lulw just ignore the error luwl ")
+      // res.status(500);
+      // products = err;
     });
   res.json(products);
 });
