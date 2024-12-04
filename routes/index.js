@@ -118,18 +118,17 @@ router.get("/getreceiptdetails", async function (req, res) {
       checkName: p.product_id,
       price: p.cost,
       amount: p.amount,
-      weight: Math.trunc(p.weight*1000),
+      weight: p.weight ? Math.trunc(p.weight*1000) : -1,
     };
     if (p.Product) {
       purchase = {
         ...purchase,
-        displayName: p.Product.display_name,
-        calories: p.Product.calories,
-        protein: p.Product.protein,
-        carbs: p.Product.carbs,
-        fats: p.Product.fats,
+        displayName: p.Product?.display_name ?? "",
+        calories: p.Product?.calories ?? -1,
+        protein: p.Product?.protein ?? -1,
+        carbs: p.Product?.carbs ?? -1,
+        fats: p.Product?.fats ?? -1
       };
-    }
     return purchase;
   });
 
