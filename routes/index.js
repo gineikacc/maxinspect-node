@@ -47,7 +47,7 @@ router.post("/createreceipt", async function (req, res) {
     })
     .catch((err) => {
       console.log("PROBLEM!! " + err);
-      res.status(200);
+      res.status(500).send("");
     });
   console.log(`check ${receipt.id} purchase count : ${products.length}`);
   products.forEach((p) => {
@@ -68,7 +68,7 @@ router.post("/createreceipt", async function (req, res) {
         console.log("PROBLEM OVER!! ");
       });
   });
-  res.status(500);
+  res.status(200).send("");
 });
 
 router.get("/getallreceiptids", async function (req, res) {
