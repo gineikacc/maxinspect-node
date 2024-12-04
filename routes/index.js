@@ -86,8 +86,8 @@ router.get("/getproductsofcheck", async function (req, res) {
     .then((arr) => {
       products = arr.map(p=>(
         {
-          check_name: p.check_name,
-          display_name: p.display_name,
+          checkName: p.check_name,
+          displayName: p.display_name,
           price: p.price,
           weight: p.weight,
           calories: p.calories,
