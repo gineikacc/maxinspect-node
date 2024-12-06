@@ -75,14 +75,12 @@ router.get("/receiptpurchases", async function (req, res) {
     where: { receipt_id: req.query.id },
   })
     .then((arr) => {
-      purchases = arr.map(p=>(
-        {
-          checkID: p.receipt_id,
-          productID: p.product_id,
-          cost: p.cost,
-          amount: p.amount,
-        }
-      ));
+      purchases = arr.map((p) => ({
+        checkID: p.receipt_id,
+        productID: p.product_id,
+        cost: p.cost,
+        amount: p.amount,
+      }));
     })
     .catch((err) => {
       console.log("lulw just ignore the error luwl ");
@@ -106,18 +104,16 @@ router.get("/tempplsignore", async function (req, res) {
     ],
   })
     .then((arr) => {
-      products = arr.map(p=>(
-        {
-          checkName: p.check_name,
-          displayName: p.display_name,
-          price: p.price,
-          weight: p.weight,
-          calories: p.calories,
-          protein: p.protein,
-          fats: p.fats,
-          carbs: p.carbs,
-        }
-      ));
+      products = arr.map((p) => ({
+        checkName: p.check_name,
+        displayName: p.display_name,
+        price: p.price,
+        weight: p.weight,
+        calories: p.calories,
+        protein: p.protein,
+        fats: p.fats,
+        carbs: p.carbs,
+      }));
     })
     .catch((err) => {
       console.log("lulw just ignore the error luwl ");
@@ -128,15 +124,20 @@ router.get("/tempplsignore", async function (req, res) {
   res.json(products);
 });
 
-// productID -> product
-router.get("/product", async function (req, res) {
+// productQuery -> product
+router.get("/productQuery", async function (req, res) {
   console.log("Getcheck ON");
-  let product;
-  await Product.findOne({
-        where: { check_name: req.query.id },
+  let product = [];
+  await Product.findAll({
+    where: {
+      display_name: {
+        [Op.substring]: req.query.q,
+      },
+    },
   })
-    .then((p) => {
-      product = {
+    .then((arr) => {
+      arr.forEach((p) => {
+        product.push({
           checkName: p.check_name,
           displayName: p.display_name,
           price: p.price,
@@ -145,7 +146,34 @@ router.get("/product", async function (req, res) {
           protein: p.protein,
           fats: p.fats,
           carbs: p.carbs,
-        };
+        });
+      });
+    })
+    .catch((err) => {
+      console.log("lulw just ignore the error luwl ");
+      console.log(err);
+    });
+  res.json(product);
+});
+
+// productID -> product
+router.get("/product", async function (req, res) {
+  console.log("Getcheck ON");
+  let product;
+  await Product.findOne({
+    where: { check_name: req.query.id },
+  })
+    .then((p) => {
+      product = {
+        checkName: p.check_name,
+        displayName: p.display_name,
+        price: p.price,
+        weight: p.weight,
+        calories: p.calories,
+        protein: p.protein,
+        fats: p.fats,
+        carbs: p.carbs,
+      };
     })
     .catch((err) => {
       console.log("lulw just ignore the error luwl ");
