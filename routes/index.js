@@ -37,7 +37,7 @@ router.post("/createreceipt", async function (req, res) {
     id: r.checkID,
     owner_name: r.owner,
     date_issued: r.dateIssued,
-    cost_total: cost,
+    cost_total: r.cost,
   };
 
   await Receipt.create(receipt)
