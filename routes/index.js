@@ -54,7 +54,7 @@ router.post("/createreceipt", async function (req, res) {
       receipt_id: receipt.id.toString(),
       product_id: p.name,
       amount: p.amount,
-      cost: p.price,
+      cost: p.cost,
     };
     Purchase.create(purchase)
       .then(() => {
