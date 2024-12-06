@@ -71,8 +71,32 @@ router.post("/createreceipt", async function (req, res) {
   res.status(200).send("");
 });
 
+router.get("/receiptpurchases", async function (req, res) {
+  let purchases = [];
+  await Purchase.findAll({
+    where: { receipt_id: req.query.id },
+  })
+    .then((arr) => {
+      purchases = arr.map(p=>(
+        {
+          receipt_id: p.receipt_id,
+          product_id: p.product_id,
+          cost: p.cost,
+          amount: p.amount,
+        }
+      ));
+    })
+    .catch((err) => {
+      console.log("lulw just ignore the error luwl ");
+      console.log(err);
+      // res.status(500);
+      // products = err;
+    });
+  res.json(purchases);
+});
 // checkID -> product[]
-router.get("/receiptproducts", async function (req, res) {
+//router.get("/receiptproducts", async function (req, res) {
+router.get("/tempplsignore", async function (req, res) {
   console.log("Getcheck ON");
   let products = [];
   await Product.findAll({
