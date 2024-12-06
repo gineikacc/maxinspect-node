@@ -63,7 +63,7 @@ router.post("/createreceipt", async function (req, res) {
         console.log(p.name);
       })
       .catch((err) => {
-        console.log("PROBLEM!! " + err);
+        console.log("createReceipt error!! " + err);
         console.log(p);
         console.log("PROBLEM OVER!! ");
       });
@@ -79,7 +79,7 @@ router.get("/receiptpurchases", async function (req, res) {
     .then((arr) => {
       purchases = arr.map(p=>(
         {
-          //receiptID: p.receipt_id,
+          receiptID: p.receipt_id,
           productID: p.product_id,
           cost: p.cost,
           amount: p.amount,
@@ -152,7 +152,7 @@ router.get("/product", async function (req, res) {
     .catch((err) => {
       console.log("lulw just ignore the error luwl ");
       console.log(err);
-      res.status(500).send({});
+      res.status(404).send({});
       // products = err;
     });
   res.json(product);
