@@ -152,7 +152,7 @@ router.get("/product", async function (req, res) {
     .catch((err) => {
       console.log("lulw just ignore the error luwl ");
       console.log(err);
-      res.status(500);
+      res.status(500).send({});
       // products = err;
     });
   res.json(product);
