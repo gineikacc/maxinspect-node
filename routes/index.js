@@ -32,8 +32,8 @@ router.post("/createreceipt", async function (req, res) {
   console.log("CREATE receipt ON");
   //Need input check
   let r = req.body;
-  let products = r.products;
-  let totalPrice = products.reduce((acc, x) => acc + x.price, 0);
+  let purchases = r.purchases;
+  let totalPrice = purchases.reduce((acc, x) => acc + x.price, 0);
   let receipt = {
     id: r.checkID,
     owner_name: r.owner,
@@ -50,7 +50,7 @@ router.post("/createreceipt", async function (req, res) {
       res.status(500).send("");
     });
   console.log(`check ${receipt.id} purchase count : ${products.length}`);
-  products.forEach((p) => {
+  purchases.forEach((p) => {
     let purchase = {
       receipt_id: receipt.id,
       product_id: p.name,
