@@ -72,7 +72,7 @@ router.post("/createreceipt", async function (req, res) {
 });
 
 // checkID -> product[]
-router.get("/getproductsofcheck", async function (req, res) {
+router.get("/getpurchasesofcheck", async function (req, res) {
   console.log("Getcheck ON");
   let products = [];
   await Product.findAll({
@@ -104,6 +104,34 @@ router.get("/getproductsofcheck", async function (req, res) {
       // products = err;
     });
   res.json(products);
+});
+
+// productID -> product
+router.get("/product", async function (req, res) {
+  console.log("Getcheck ON");
+  let product;
+  await Product.find({
+        where: { display_name: req.query.id },
+  })
+    .then((p) => {
+      product = {
+          checkName: p.check_name,
+          displayName: p.display_name,
+          price: p.price,
+          weight: p.weight,
+          calories: p.calories,
+          protein: p.protein,
+          fats: p.fats,
+          carbs: p.carbs,
+        };
+    })
+    .catch((err) => {
+      console.log("lulw just ignore the error luwl ");
+      console.log(err);
+      res.status(500);
+      // products = err;
+    });
+  res.json(product);
 });
 
 // OwnerID -> checkID[]
