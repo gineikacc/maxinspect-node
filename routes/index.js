@@ -49,7 +49,7 @@ router.post("/createreceipt", async function (req, res) {
       console.log("PROBLEM!! " + err);
       res.status(500).send("");
     });
-  console.log(`check ${receipt.id} purchase count : ${products.length}`);
+  console.log(`check ${receipt.id} purchase count : ${purchases.length}`);
   purchases.forEach((p) => {
     let purchase = {
       receipt_id: receipt.id,
