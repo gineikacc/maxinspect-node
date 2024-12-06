@@ -33,12 +33,11 @@ router.post("/createreceipt", async function (req, res) {
   //Need input check
   let r = req.body;
   let purchases = r.purchases;
-  let totalPrice = purchases.reduce((acc, x) => acc + x.price, 0);
   let receipt = {
     id: r.checkID,
     owner_name: r.owner,
     date_issued: r.dateIssued,
-    cost_total: totalPrice,
+    cost_total: cost,
   };
 
   await Receipt.create(receipt)
@@ -51,15 +50,15 @@ router.post("/createreceipt", async function (req, res) {
   console.log(`check ${receipt.id} purchase count : ${purchases.length}`);
   purchases.forEach((p) => {
     let purchase = {
-      receipt_id: receipt.id.toString(),
-      product_id: p.name,
+      receipt_id: p.checkID,
+      product_id: p.productID,
       amount: p.amount,
       cost: p.cost,
     };
     Purchase.create(purchase)
       .then(() => {
         console.log("Purchase Created !");
-        console.log(p.name);
+        console.log(p.productID);
       })
       .catch((err) => {
         console.log("createReceipt error!! " + err);
