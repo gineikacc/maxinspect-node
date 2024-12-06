@@ -111,7 +111,7 @@ router.get("/product", async function (req, res) {
   console.log("Getcheck ON");
   let product;
   await Product.find({
-        where: { display_name: req.query.id },
+        where: { check_name: req.query.id },
   })
     .then((p) => {
       product = {
