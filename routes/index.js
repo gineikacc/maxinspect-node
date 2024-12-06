@@ -110,7 +110,7 @@ router.get("/getpurchasesofcheck", async function (req, res) {
 router.get("/product", async function (req, res) {
   console.log("Getcheck ON");
   let product;
-  await Product.find({
+  await Product.findOne({
         where: { check_name: req.query.id },
   })
     .then((p) => {
