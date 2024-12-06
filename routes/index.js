@@ -125,7 +125,7 @@ router.get("/tempplsignore", async function (req, res) {
 });
 
 // productQuery -> product
-router.get("/productQuery", async function (req, res) {
+router.get("/productquery", async function (req, res) {
   console.log("Getcheck ON");
   let product = [];
   await Product.findAll({
