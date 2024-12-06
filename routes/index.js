@@ -51,7 +51,7 @@ router.post("/createreceipt", async function (req, res) {
   console.log(`check ${receipt.id} purchase count : ${purchases.length}`);
   purchases.forEach((p) => {
     let purchase = {
-      receipt_id: receipt.id,
+      receipt_id: receipt.id.toString(),
       product_id: p.name,
       amount: p.amount,
       cost: p.price,
