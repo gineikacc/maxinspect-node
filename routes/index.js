@@ -41,13 +41,12 @@ router.post("/createreceipt", async function (req, res) {
     cost_total: totalPrice,
   };
 
-  Receipt.create(receipt)
+  await Receipt.create(receipt)
     .then(() => {
       console.log("Receipt Created !");
     })
     .catch((err) => {
       console.log("PROBLEM!! " + err);
-      res.status(500).send("");
     });
   console.log(`check ${receipt.id} purchase count : ${purchases.length}`);
   purchases.forEach((p) => {
