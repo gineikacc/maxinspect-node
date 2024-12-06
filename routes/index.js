@@ -79,8 +79,8 @@ router.get("/receiptpurchases", async function (req, res) {
     .then((arr) => {
       purchases = arr.map(p=>(
         {
-          receipt_id: p.receipt_id,
-          product_id: p.product_id,
+          receiptID: p.receipt_id,
+          productID: p.product_id,
           cost: p.cost,
           amount: p.amount,
         }
