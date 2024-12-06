@@ -72,7 +72,7 @@ router.post("/createreceipt", async function (req, res) {
 });
 
 // checkID -> product[]
-router.get("/getpurchasesofcheck", async function (req, res) {
+router.get("/receiptproducts", async function (req, res) {
   console.log("Getcheck ON");
   let products = [];
   await Product.findAll({
@@ -135,7 +135,7 @@ router.get("/product", async function (req, res) {
 });
 
 // OwnerID -> checkID[]
-router.get("/getallreceiptids", async function (req, res) {
+router.get("/ownercheckids", async function (req, res) {
   console.log("Getcheck ON");
   let ids = [];
   await Receipt.findAll({
@@ -151,7 +151,7 @@ router.get("/getallreceiptids", async function (req, res) {
   res.json(ids);
 });
 
-router.get("/getnewestreceiptid", async function (req, res) {
+router.get("/ownernewestcheckid", async function (req, res) {
   console.log("Getcheck ON");
   await Receipt.findOne({
     where: { owner_name: req.query.owner },
