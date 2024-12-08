@@ -176,8 +176,6 @@ router.get("/product", async function (req, res) {
       };
     })
     .catch((err) => {
-      console.log("lulw just ignore the error luwl ");
-      console.log(err);
       res.status(404).send({});
       // products = err;
     });
