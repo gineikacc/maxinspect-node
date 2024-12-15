@@ -1,2 +1,3 @@
-sudo mariadb -u user -p < config/dbinit.sql
+sudo mariadb < config/dbinit.sql
+sudo npm install
 sudo npm run start
