@@ -14,7 +14,10 @@ const sequelize = new Sequelize(
 );
   sequelize.authenticate()
   .then(()=>{console.log("L : Auth Success!");})
-  .catch(()=>{console.log("E : Auth Failure!");})
+  .catch((err)=>{
+	  console.log(err.message);
+	  console.log("E : Auth Failure!");
+  })
 
 module.exports = sequelize;
 
