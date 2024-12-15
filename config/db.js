@@ -3,7 +3,7 @@ const dotenv = require('dotenv');
 dotenv.config();
 
 const sequelize = new Sequelize(
-  process.env.DB_NAME,
+  "maxinspect",
   process.env.DB_USER,
   process.env.DB_PASS,
   {
