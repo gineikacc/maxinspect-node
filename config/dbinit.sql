@@ -1,3 +1,7 @@
+CREATE USER IF NOT EXISTS 'user'@'localhost' IDENTIFIED BY 'weow';
+GRANT ALL PRIVILEGES ON *.* TO 'user'@'localhost' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+
 CREATE DATABASE IF NOT EXISTS maxinspect;
 
 USE maxinspect;
